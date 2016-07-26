@@ -73,6 +73,7 @@ ball:setLinearVelocity(0, 500)
 
 -- ############################## ブロックを配置してみよう ##############################
 
+local blockNum = 0
 local blocks = {}
 for y = 0, 1, 1 do
     for x = 0, 4, 1 do
@@ -84,12 +85,14 @@ for y = 0, 1, 1 do
         blocks[index].tag = "block"
         blocks[index].index = index
         physics.addBody(blocks[index], "static", {density = 0.0, friction = 0.0, bounce = 1.0})
+        blockNum = blockNum + 1
     end
 end
 
 -- ブロックを削除する処理 後で使う
 local function deleteBlock(index)
     blocks[index]:removeSelf()
+    blockNum = blockNum - 1
 end
 
 -- ############################## ブロックを配置してみよう ##############################
