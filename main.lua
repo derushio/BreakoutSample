@@ -178,6 +178,10 @@ local function ballCollision(event)
         if (event.other.tag == "block") then
             local hitBlock = event.other
             deleteBlock(hitBlock.index)
+            -- ブロックがなくなった場合はクリア判定
+            if (numBlocks == 0) then
+                completeGame()
+            end
         elseif (event.other.tag == "bottomWall") then
             failGame()
         end
