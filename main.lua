@@ -131,6 +131,7 @@ Runtime:addEventListener("touch", displayTouchListener)
 -- ############################## ゲーム判定 ##############################
 
 local completeText = nil
+
 local function completeGame()
     physics.stop()
     completeText = display.newText(displayGroup, "Complete", width/2, height/2, native.systemFont, 100)
