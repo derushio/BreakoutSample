@@ -128,6 +128,25 @@ Runtime:addEventListener("touch", displayTouchListener)
 
 
 
+-- ############################## ゲーム判定 ##############################
+
+local completeText = nil
+local function completeGame()
+    physics.stop()
+    completeText = display.newText(displayGroup, "Complete", width/2, height/2, native.systemFont, 100)
+    completeText:setTextColor(1.0, 1.0, 1.0)
+end
+
+local function failGame()
+    physics.stop()
+    completeText = display.newText(displayGroup, "Fail", width/2, height/2, native.systemFont, 100)
+    completeText:setTextColor(1.0, 1.0, 1.0)
+end
+
+-- ############################## ゲーム判定 ##############################
+
+
+
 -- ############################## ボールの角度と速度を安定させよう ##############################
 
 local function ballStabilization()
