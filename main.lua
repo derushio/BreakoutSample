@@ -10,12 +10,12 @@
 -- ############################## 変数とは？ ##############################
 
 -- `width` は画面の横幅(1080)が入っている
-local width = display.contentWidth
+width = display.contentWidth
 -- `height` は画面の縦幅(1920)が入っている
-local height = display.contentHeight
+height = display.contentHeight
 
 -- 描画グループ
-local displayGroup = display.newGroup()
+displayGroup = display.newGroup()
 
 -- ############################## 変数とは？ ##############################
 
@@ -24,7 +24,7 @@ local displayGroup = display.newGroup()
 -- ############################## 物理演算とは？ ##############################
 
 -- 物理演算をするための機能を読み込んで `physics` に入れておく
-local physics = require("physics")
+physics = require("physics")
 -- 物理演算を起動する
 physics.start(true)
 physics.setGravity(0, 0)
@@ -36,7 +36,7 @@ physics.setGravity(0, 0)
 -- ############################## 壁を作ろう ##############################
 
 -- 壁の連想配列を作ろう
-local walls = {}
+walls = {}
 walls[1] = display.newLine(displayGroup, 0, 0, width, 0)
 walls[1].tag = "topWall"
 
@@ -62,16 +62,16 @@ end
 
 -- ############################## ボールを動かそう ##############################
 
-local ball = display.newCircle(displayGroup, 0, 0, 25)
+ball = display.newCircle(displayGroup, 0, 0, 25)
 ball.tag = "ball"
 physics.addBody(ball, "dynamic", {density = 0.0, friction = 0.0, bounce = 1.0})
 
-local function resetBallPos()
+function resetBallPos()
     ball.x = width/2
     ball.y = 1200
 end
 
-local function gameStart()
+function gameStart()
     resetBallPos()
     ball:setLinearVelocity(0, 500)
 end
@@ -84,12 +84,12 @@ gameStart()
 
 -- ############################## ブロックを配置してみよう ##############################
 
-local maxNumBlocks = 0
-local numBlocks = 0
+maxNumBlocks = 0
+numBlocks = 0
 
-local blocks = {}
+blocks = {}
 
-local function deleteBlock(index)
+function deleteBlock(index)
     if (blocks[index] == nil) then
         return
     end
@@ -99,7 +99,7 @@ local function deleteBlock(index)
     numBlocks = numBlocks - 1
 end
 
-local function deleteAllBlocks()
+function deleteAllBlocks()
     for i = 0, maxNumBlocks, 1 do
         deleteBlock(i)
     end
@@ -109,7 +109,7 @@ local function deleteAllBlocks()
     blocks = {}
 end
 
-local function deployBlocks()
+function deployBlocks()
     -- ブロックを配置する前に全てのブロックを削除
     deleteAllBlocks()
 
@@ -140,7 +140,7 @@ deployBlocks()
 
 -- ############################## ラケットを配置しよう ##############################
 
-local racket = display.newRect(displayGroup, width/2, 1700, 200, 20)
+racket = display.newRect(displayGroup, width/2, 1700, 200, 20)
 racket.tag = "racket"
 racket:setFillColor(1.0, 1.0, 0.0)
 physics.addBody(racket, "static", {density = 0.0, friction = 0.0, bounce = 1.0})
@@ -151,11 +151,11 @@ physics.addBody(racket, "static", {density = 0.0, friction = 0.0, bounce = 1.0})
 
 -- ############################## ラケットを動かそう ##############################
 
-local function racketMove(event)
+function racketMove(event)
     racket.x = event.x
 end
 
-local function displayTouchListener(event)
+function displayTouchListener(event)
    racketMove(event) 
 end
 
@@ -168,15 +168,15 @@ Runtime:addEventListener("touch", displayTouchListener)
 
 -- ############################## ゲーム判定 ##############################
 
-local completeText = nil
+completeText = nil
 
-local function completeGame()
+function completeGame()
     physics.pause()
     completeText = display.newText(displayGroup, "Complete", width/2, height/2, native.systemFont, 100)
     completeText:setTextColor(1.0, 1.0, 1.0)
 end
 
-local function failGame()
+function failGame()
     physics.pause()
     completeText = display.newText(displayGroup, "Fail", width/2, height/2, native.systemFont, 100)
     completeText:setTextColor(1.0, 1.0, 1.0)
@@ -188,7 +188,7 @@ end
 
 -- ############################## ボールの角度と速度を安定させよう ##############################
 
-local function ballStabilization()
+function ballStabilization()
     local vx, vy = ball:getLinearVelocity()
         
     if (0 < vx) then
@@ -206,7 +206,7 @@ local function ballStabilization()
     ball:setLinearVelocity(vx, vy)
 end
 
-local function ballCollision(event)
+function ballCollision(event)
     if (event.phase == "began") then
         print("collision: "..event.other.tag)
     elseif (event.phase == "ended") then
