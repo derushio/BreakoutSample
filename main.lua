@@ -62,10 +62,21 @@ end
 
 -- ############################## ボールを動かそう ##############################
 
-local ball = display.newCircle(displayGroup, width/2, 1200, 25)
+local ball = display.newCircle(displayGroup, 0, 0, 25)
 ball.tag = "ball"
 physics.addBody(ball, "dynamic", {density = 0.0, friction = 0.0, bounce = 1.0})
-ball:setLinearVelocity(0, 500)
+
+local function resetBallPos()
+    ball.x = width/2
+    ball.y = 1200
+end
+
+local function gameStart()
+    resetBallPos()
+    ball:setLinearVelocity(0, 500)
+end
+
+gameStart()
 
 -- ############################## ボールを動かそう ##############################
 
