@@ -75,6 +75,7 @@ ball:setLinearVelocity(0, 500)
 
 local numBlocks = 0
 local blocks = {}
+
 for y = 0, 1, 1 do
     for x = 0, 4, 1 do
         -- 何番目の要素か
@@ -149,7 +150,7 @@ end
 
 local function ballCollision(event)
     if (event.phase == "began") then
-        print("collision:", event.other.tag)
+        print("collision: "..event.other.tag)
     elseif (event.phase == "ended") then
         ballStabilization()
 
@@ -157,7 +158,6 @@ local function ballCollision(event)
         if (event.other.tag == "block") then
             local hitBlock = event.other
             deleteBlock(hitBlock.index)
-            print(numBlocks)
         elseif (event.other.tag == "bottomWall") then
             physics.pause()
         end
