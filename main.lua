@@ -26,7 +26,7 @@ local displayGroup = display.newGroup()
 -- 物理演算をするための機能を読み込んで `physics` に入れておく
 local physics = require("physics")
 -- 物理演算を起動する
-physics.start()
+physics.start(true)
 physics.setGravity(0, 0)
 
 -- ############################## 物理演算とは？ ##############################
