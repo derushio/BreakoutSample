@@ -35,6 +35,11 @@ physics.setGravity(0, 0)
 
 -- ############################## 壁を作ろう ##############################
 
+-- 背景黒では寂しいので、背景を追加しましょう
+background = display.newImageRect(displayGroup, "bg_space.png", width, height)
+background.x = width/2
+background.y = height/2
+
 -- 壁の連想配列を作ろう
 walls = {}
 walls[1] = display.newLine(displayGroup, 0, 0, width, 0)
@@ -52,7 +57,9 @@ walls[4].tag = "bottomWall"
 -- for i = 最初の値, 最後の値(含む), 幾つづつiをプラスするか do ~ end
 -- `#` は要素数
 for i = 1, #walls, 1 do
+    -- 壁の厚さを変更
     walls[i].strokeWidth = 50
+    -- `physics.addBody(登録する物, 種類, オプション)` 物理演算に登録
     physics.addBody(walls[i], "static", {density = 0.0, friction = 0.0, bounce = 1.0})
 end
 
@@ -62,7 +69,7 @@ end
 
 -- ############################## ボールを動かそう ##############################
 
-ball = display.newCircle(displayGroup, 0, 0, 25)
+ball = display.newImageRect(displayGroup, "star.png", 50, 50)
 ball.tag = "ball"
 physics.addBody(ball, "dynamic", {density = 0.0, friction = 0.0, bounce = 1.0})
 
@@ -118,7 +125,7 @@ function deployBlocks()
         for x = 0, 4, 1 do
             -- 何番目の要素か
             local index = x + (y * 5)
-            blocks[index] = display.newImageRect(displayGroup, "block.jpg", width * 1/8, 100)
+            blocks[index] = display.newImageRect(displayGroup, "block.png", width * 1/8, 100)
             blocks[index].x = (x + 1) * (width * 1/6)
             blocks[index].y = 400 + (200 * y)
             blocks[index].tag = "block"
@@ -166,7 +173,7 @@ Runtime:addEventListener("touch", displayTouchListener)
 
 
 
--- ############################## ゲーム判定 ##############################
+-- ############################## ゲーム判定を追加しよう ##############################
 
 completeText = nil
 
@@ -186,13 +193,14 @@ function failGame()
     Runtime:addEventListener("tap", resetGame)
 end
 
--- ############################## ゲーム判定 ##############################
+-- ############################## ゲーム判定を追加しよう ##############################
 
 
 
 -- ############################## ボールの角度と速度を安定させよう ##############################
 
 function ballStabilization()
+    -- 速度を取得して、x,yの速度を500に固定する
     local vx, vy = ball:getLinearVelocity()
         
     if (0 < vx) then
@@ -207,7 +215,10 @@ function ballStabilization()
         vy = -500
     end
     
+    -- 速度を安定させる
     ball:setLinearVelocity(vx, vy)
+    -- 回転させる
+    ball:applyTorque(90)
 end
 
 function ballCollision(event)
