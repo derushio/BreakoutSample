@@ -171,12 +171,12 @@ physics.addBody(racket, "static", {density = 0.0, friction = 0.0, bounce = 1.0})
 
 -- ############################## ラケットを動かそう ##############################
 
-function racketMove(event)
-    racket.x = event.x
+function moveRacket(xPosition)
+    racket.x = xPosition
 end
 
 function displayTouchListener(event)
-   racketMove(event) 
+   moveRacket(event.x) 
 end
 
 -- 画面全体のタッチイベントを設定
@@ -210,7 +210,7 @@ end
 
 
 
--- ############################## ボールの角度と速度を安定させよう ##############################
+-- ############################## ゲームロジックを作ろう ##############################
 
 function ballStabilization()
     -- 速度を取得して、x,yの速度を500に固定する
@@ -257,7 +257,7 @@ end
 -- 衝突イベントをボールに設定
 ball:addEventListener("collision", ballCollision)
 
--- ############################## ボールの角度と速度を安定させよう ##############################
+-- ############################## ゲームロジックを作ろう ##############################
 
 
 
